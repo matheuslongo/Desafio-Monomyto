@@ -12,7 +12,6 @@ import org.hibernate.jpa.QueryHints;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
@@ -92,8 +91,6 @@ public class CatalogoService {
         return maiorValorAlcolicoDto;
     } ;
 
-
-
     public MenorValorAlcolicoDto findByMenorValorAlcolico() {
 
         StringBuilder sql = new StringBuilder()
@@ -118,6 +115,5 @@ public class CatalogoService {
         return menorValorAlcolicoDtos;
     } ;
 
-
-    }
+}
 

@@ -3,7 +3,7 @@ package com.desafio.controller;/*
  * @author matheuslongo on 01/10/2022.
  */
 
-import com.desafio.dto.VendaDTO;
+import com.desafio.dto.VendaDto;
 import com.desafio.service.VendaItemService;
 import com.desafio.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,10 @@ public class VendaController {
     private VendaItemService vendaItemService;
 
     @PostMapping
-    public ResponseEntity<?> cargaAllVendas(@RequestBody List<VendaDTO> vendaDTOList){
+    public ResponseEntity<?> cargaAllVendas(@RequestBody List<VendaDto> vendaDtoList){
         try {
-            vendaItemService.persistAll(vendaDTOList);
+            vendaItemService.persistAll(vendaDtoList);
+
             return  ResponseEntity.status(HttpStatus.CREATED).body("CARGA REALIZADA COM SUCESSO!");
         }catch (Exception e){
             e.printStackTrace();

@@ -3,17 +3,20 @@ package com.desafio.service;/*
  * @author matheuslongo on 01/10/2022.
  */
 
-import com.desafio.dto.VendaDTO;
-import com.desafio.dto.VendaItemDto;
+import com.desafio.dto.VendaDto;
+import com.desafio.model.Catalogo;
+import com.desafio.model.Cliente;
 import com.desafio.model.Venda;
 import com.desafio.model.VendaItem;
+import com.desafio.repository.CatalogoRepository;
+import com.desafio.repository.ClinteRepository;
 import com.desafio.repository.VendaItemRepository;
 import com.desafio.repository.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class VendaItemService {
@@ -22,46 +25,70 @@ public class VendaItemService {
     private VendaItemRepository vendaItemRepository;
 
     @Autowired
+    private CatalogoRepository catalogoRepository;
+
+    @Autowired
+    private ClinteRepository clinteRepository;
+
+    @Autowired
     private VendaRepository vendaRepository;
 
-    public boolean save(VendaItem vendaItem){
+    public boolean save(VendaItem vendaItem) {
         try {
             vendaItemRepository.save(vendaItem);
-            return true ;
-        }catch (Exception e){
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean persistAll(List<VendaDTO> vendaDtoList){
+    public Cliente cliente(String id){
+        Optional<Cliente> clienteOptional = clinteRepository.findById(id);
+       return clienteOptional.get();
+    }
+
+    public Venda venda(String id){
+        Optional<Venda> vendaOptional = vendaRepository.findById(id);
+        return vendaOptional.get();
+    }
+
+    public Catalogo catalogo(String id){
+        catalogoRepository.findById(id);
+        Optional<Catalogo> catalogoOptional = catalogoRepository.findById(id);
+        return catalogoOptional.get();
+    }
+
+    public boolean persistAll(List<VendaDto> vendaDtoList) {
         try {
             vendaDtoList.forEach(vendaDto -> {
 
-                List<VendaItem>vendaItemList = new ArrayList<>();
+                List<VendaItem> vendaItemList = new ArrayList<>();
                 vendaDto.getVendaItens().forEach(vendaItemDto -> {
                     var vendaItem = VendaItem.builder()
-                            .id(vendaItemDto.getCatalogoId())
-                            .venda(vendaItemDto.getVenda())
-                            .precoUnitario(vendaItemDto.getPrecoUnitario())
+                          //.venda(venda(vendaDto.getId())) na teoria este método era pra recuperar o ID que esta no dto(vendaDto)
+                            .catalogo(catalogo(vendaItemDto.getCatalogoId()))
                             .quantidade(vendaItemDto.getQuantidade())
+                            .precoUnitario(vendaItemDto.getPrecoUnitario())
                             .build();
                     vendaItemList.add(vendaItem);
+                    vendaItemRepository.save(vendaItem);
                 });
+
                 Venda venda = Venda.builder()
-                        .cliente(vendaDto.getIdCliente())
+                        .cliente(cliente(vendaDto.getIdCliente()))
                         .id(vendaDto.getId())
-                        .data(vendaDto.getDataDeVenda())
+                        .data(LocalDateTime.parse(vendaDto.getDataDeVenda()))
                         .itens(vendaItemList)
                         .build();
                 vendaRepository.save(venda);
             });
+
             return true;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-
 }

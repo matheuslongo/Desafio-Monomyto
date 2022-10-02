@@ -3,18 +3,13 @@ package com.desafio.service;/*
  * @author matheuslongo on 01/10/2022.
  */
 
-import com.desafio.dto.ClienteDto;
-import com.desafio.dto.VendaDTO;
-import com.desafio.model.Cliente;
+import com.desafio.dto.VendaDto;
 import com.desafio.model.Venda;
 import com.desafio.repository.VendaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,11 +39,11 @@ public class VendaService {
         return false;
     }
 
-    public boolean persistAll(List<VendaDTO>vendaDTOList){
+    public boolean persistAll(List<VendaDto> vendaDtoList){
         try {
-            vendaDTOList.forEach(vendaDTO -> {
+            vendaDtoList.forEach(vendaDto -> {
                 Venda venda = new Venda();
-                BeanUtils.copyProperties(vendaDTO, venda);
+                BeanUtils.copyProperties(vendaDto, venda);
                if(!save(venda)){
                    System.out.println("VENDA NAO PERSISTIDA: " + venda.getId());
                }

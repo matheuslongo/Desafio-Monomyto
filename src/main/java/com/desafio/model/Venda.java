@@ -3,9 +3,10 @@ package com.desafio.model;/*
  * @author matheuslongo on 27/09/2022.
  */
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Builder
 @Getter
 @Setter
@@ -27,12 +29,10 @@ public class Venda implements Serializable {
 
 
     @Id
-    @NotNull
     @JsonProperty("Id")
-    @GeneratedValue
     private String id ;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("IdCliente")
     private Cliente cliente ;
 
@@ -43,7 +43,8 @@ public class Venda implements Serializable {
 
 
     @JsonProperty("Itens")
-    @OneToMany(mappedBy = "venda")
+    @JsonIgnore
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
     private List<VendaItem> itens ;
 
 }
