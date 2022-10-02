@@ -18,7 +18,7 @@ public interface ClinteRepository extends JpaRepository<Cliente, String> {
 
     Optional<Cliente> findById(@Param("id") String id);
 
-    Optional<Cliente> findByNome(@Param("nome")String nome);
+    List<Cliente> findByNome(@Param("nome")String nome);
 
     List<Cliente> findByNomeContains(String nome);
 

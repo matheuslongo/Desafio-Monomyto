@@ -46,7 +46,7 @@ public class Catalogo implements Serializable {
     @JsonProperty("Regiao")
     private String regiao;
 
-    @Column(name = "precoAtual")
+    @Column(name = "precoAtual", length = 10, precision = 2)
     @JsonProperty("PrecoAtual")
     private Double precoAtual;
 

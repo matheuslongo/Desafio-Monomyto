@@ -32,7 +32,7 @@ public class Venda implements Serializable {
     @JsonProperty("Id")
     private String id ;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonProperty("IdCliente")
     private Cliente cliente ;
 

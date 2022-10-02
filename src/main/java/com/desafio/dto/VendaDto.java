@@ -12,7 +12,7 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.List;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 @Data
 @ToString
 @AllArgsConstructor
@@ -35,6 +35,7 @@ public class VendaDto implements Serializable {
 
     @JsonProperty("Itens")
     private List<VendaItemDto> vendaItens;
+
 
 
 }

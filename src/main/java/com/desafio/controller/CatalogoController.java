@@ -52,12 +52,12 @@ public class CatalogoController {
 
     @GetMapping("/bebidaMaisForte")
     public ResponseEntity<?> findBebidaMaisForte() {
-        return ResponseEntity.status(HttpStatus.OK).body(catalogoService.findByMaiorValorAlcolico());
+        return ResponseEntity.status(HttpStatus.OK).body(catalogoService.findByMaiorValorAlcoolico());
     }
 
     @GetMapping("/bebidaMaisFraca")
     public ResponseEntity<?> findBebidaMaisFraca() {
-        return ResponseEntity.status(HttpStatus.OK).body(catalogoService.findByMenorValorAlcolico());
+        return ResponseEntity.status(HttpStatus.OK).body(catalogoService.findByMenorValorAlcoolico());
     }
 
     @PostMapping

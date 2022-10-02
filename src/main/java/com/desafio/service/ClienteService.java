@@ -17,7 +17,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -48,7 +47,7 @@ public class ClienteService {
         return clinteRepository.findById(id);
     }
 
-    public Optional<Cliente> findByNome(String nome) {
+    public List<Cliente> findByNome(String nome) {
         return clinteRepository.findByNome(nome);
     }
 

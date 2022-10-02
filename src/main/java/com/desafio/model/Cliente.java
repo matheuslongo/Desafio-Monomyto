@@ -34,9 +34,6 @@ public class Cliente implements Serializable {
     @Column(name = "nome")
     private String nome;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    @JsonProperty("IdCliente")
-    private Venda venda;
 
     @Column(name = "dataDeNascimento")
     @DateTimeFormat(pattern = "yyyy/MM/dd")

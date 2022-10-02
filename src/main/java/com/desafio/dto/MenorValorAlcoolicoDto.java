@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MenorValorAlcolicoDto {
+public class MenorValorAlcoolicoDto {
 
     private String classificacao;
     private String marca;

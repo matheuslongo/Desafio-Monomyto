@@ -29,12 +29,11 @@ public class VendaItemDto implements Serializable {
     private String catalogoId;
 
     @JsonProperty("PrecoUnitario")
-    @JsonIgnore
     private  Double precoUnitario;
 
     @JsonProperty("Quantidade")
     private Double quantidade ;
 
-    private String venda;
+
 
 }

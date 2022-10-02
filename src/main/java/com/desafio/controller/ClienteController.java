@@ -39,8 +39,7 @@ public class ClienteController {
 
     @GetMapping("/{nome}/busca")
     public ResponseEntity<Object> getClienteByNome(@PathVariable(value = "nome") String nome) {
-        Optional<Cliente> clienteOptional = clienteService.findByNome(nome);
-        return ResponseEntity.status(HttpStatus.OK).body(clienteOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findByNome(nome));
     }
 
     @GetMapping("/buscaPorParteDoNome/{nome}")

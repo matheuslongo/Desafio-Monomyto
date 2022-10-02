@@ -4,8 +4,8 @@ package com.desafio.service;/*
  */
 
 import com.desafio.dto.CatalogoDto;
-import com.desafio.dto.MaiorValorAlcolicoDto;
-import com.desafio.dto.MenorValorAlcolicoDto;
+import com.desafio.dto.MaiorValorAlcoolicoDto;
+import com.desafio.dto.MenorValorAlcoolicoDto;
 import com.desafio.model.Catalogo;
 import com.desafio.repository.CatalogoRepository;
 import org.hibernate.jpa.QueryHints;
@@ -67,53 +67,62 @@ public class CatalogoService {
         catalogoRepository.delete(catalogo);
     }
 
-    public MaiorValorAlcolicoDto findByMaiorValorAlcolico() {
+    public MaiorValorAlcoolicoDto findByMaiorValorAlcoolico() {
+        MaiorValorAlcoolicoDto maiorValorAlcoolicoDto = null;
+        try {
+            StringBuilder sql = new StringBuilder()
+                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico\n" +
+                            "    from catalogo\n" +
+                            "    where teor_alcoolico = " +
+                            "(SELECT MAX(teor_alcoolico) as " +
+                            "BEBIDA_MAIS_FORTE  from catalogo);");
 
-        StringBuilder sql = new StringBuilder()
-                .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico\n" +
-                        "    from catalogo\n" +
-                        "    where teor_alcoolico = " +
-                        "(SELECT MAX(teor_alcoolico) as " +
-                        "BEBIDA_MAIS_FORTE  from catalogo);");
+            @SuppressWarnings("unchecked")
+            Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
+                    .setHint(QueryHints.HINT_READONLY, true)
+                    .getSingleResult();
+            maiorValorAlcoolicoDto = MaiorValorAlcoolicoDto.builder()
+                    .regiao(tuplas.get(5).toString())
+                    .classificacao(tuplas.get(1).toString())
+                    .nome(tuplas.get("nome").toString())
+                    .preco_atual(Double.valueOf(tuplas.get(4).toString()))
+                    .marca(tuplas.get(2).toString())
+                    .teor_alcoolico(Double.valueOf(tuplas.get(6).toString()))
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return maiorValorAlcoolicoDto;
+    }
 
-        @SuppressWarnings("unchecked")
-        Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
-                .setHint(QueryHints.HINT_READONLY, true)
-                .getSingleResult();
-        MaiorValorAlcolicoDto maiorValorAlcolicoDto = MaiorValorAlcolicoDto.builder()
-                .regiao(tuplas.get(5).toString())
-                .classificacao(tuplas.get(1).toString())
-                .nome(tuplas.get("nome").toString())
-                .preco_atual(Double.valueOf(tuplas.get(4).toString()))
-                .marca(tuplas.get(2).toString())
-                .teor_alcoolico(Double.valueOf(tuplas.get(6).toString()))
-                .build();
-        return maiorValorAlcolicoDto;
-    } ;
+    public MenorValorAlcoolicoDto findByMenorValorAlcoolico() {
+        MenorValorAlcoolicoDto menorValorAlcoolicoDtos = null;
+        try {
+            StringBuilder sql = new StringBuilder()
+                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico " +
+                            "    from catalogo " +
+                            "    where teor_alcoolico = " +
+                            "(SELECT MIN(teor_alcoolico) as " +
+                            "BEBIDA_MAIS_FORTE  from catalogo);");
 
-    public MenorValorAlcolicoDto findByMenorValorAlcolico() {
+            @SuppressWarnings("unchecked")
+            Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
+                    .setHint(QueryHints.HINT_READONLY, true)
+                    .getSingleResult();
+            menorValorAlcoolicoDtos = MenorValorAlcoolicoDto.builder()
+                    .regiao(tuplas.get(5).toString())
+                    .classificacao(tuplas.get(1).toString())
+                    .nome(tuplas.get("nome").toString())
+                    .preco_atual(Double.valueOf(tuplas.get(4).toString()))
+                    .marca(tuplas.get(2).toString())
+                    .teor_alcoolico(Double.valueOf(tuplas.get(6).toString()))
+                    .build();
 
-        StringBuilder sql = new StringBuilder()
-                .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico\n" +
-                        "    from catalogo\n" +
-                        "    where teor_alcoolico = " +
-                        "(SELECT MIN(teor_alcoolico) as " +
-                        "BEBIDA_MAIS_FORTE  from catalogo);");
-
-        @SuppressWarnings("unchecked")
-        Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
-                .setHint(QueryHints.HINT_READONLY, true)
-                .getSingleResult();
-        MenorValorAlcolicoDto menorValorAlcolicoDtos = MenorValorAlcolicoDto.builder()
-                .regiao(tuplas.get(5).toString())
-                .classificacao(tuplas.get(1).toString())
-                .nome(tuplas.get("nome").toString())
-                .preco_atual(Double.valueOf(tuplas.get(4).toString()))
-                .marca(tuplas.get(2).toString())
-                .teor_alcoolico(Double.valueOf(tuplas.get(6).toString()))
-                .build();
-        return menorValorAlcolicoDtos;
-    } ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return menorValorAlcoolicoDtos;
+    }
 
 }
 

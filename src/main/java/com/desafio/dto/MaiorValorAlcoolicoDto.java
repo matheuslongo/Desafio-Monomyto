@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MaiorValorAlcolicoDto {
+public class MaiorValorAlcoolicoDto {
 
     private String classificacao;
     private String marca;
