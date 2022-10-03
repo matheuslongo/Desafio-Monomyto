@@ -32,8 +32,8 @@ public class VendaItem implements Serializable {
     @Column(name = "quantidade")
     private Double quantidade ;
 
-    @NotFound(action = NotFoundAction.IGNORE)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "venda_id", nullable = true)
     private Venda venda;
 

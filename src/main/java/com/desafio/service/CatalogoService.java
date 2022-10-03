@@ -7,7 +7,9 @@ import com.desafio.dto.CatalogoDto;
 import com.desafio.dto.MaiorValorAlcoolicoDto;
 import com.desafio.dto.MenorValorAlcoolicoDto;
 import com.desafio.model.Catalogo;
+import com.desafio.model.Cliente;
 import com.desafio.repository.CatalogoRepository;
+import lombok.var;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,11 +73,11 @@ public class CatalogoService {
         MaiorValorAlcoolicoDto maiorValorAlcoolicoDto = null;
         try {
             StringBuilder sql = new StringBuilder()
-                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico\n" +
-                            "    from catalogo\n" +
-                            "    where teor_alcoolico = " +
-                            "(SELECT MAX(teor_alcoolico) as " +
-                            "BEBIDA_MAIS_FORTE  from catalogo);");
+                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico ")
+                    .append("from catalogo ")
+                    .append("where teor_alcoolico = ")
+                    .append("(SELECT MAX(teor_alcoolico) as ")
+                    .append("BEBIDA_MAIS_FORTE  from catalogo);");
 
             @SuppressWarnings("unchecked")
             Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
@@ -99,11 +101,11 @@ public class CatalogoService {
         MenorValorAlcoolicoDto menorValorAlcoolicoDtos = null;
         try {
             StringBuilder sql = new StringBuilder()
-                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico " +
-                            "    from catalogo " +
-                            "    where teor_alcoolico = " +
-                            "(SELECT MIN(teor_alcoolico) as " +
-                            "BEBIDA_MAIS_FORTE  from catalogo);");
+                    .append("SELECT id, classificacao, marca, nome, preco_atual, regiao, teor_alcoolico ")
+                    .append("from catalogo ")
+                    .append("where teor_alcoolico = ")
+                    .append("(SELECT MIN(teor_alcoolico) as ")
+                    .append("BEBIDA_MAIS_FORTE  from catalogo);");
 
             @SuppressWarnings("unchecked")
             Tuple tuplas = (Tuple) entityManager.createNativeQuery(sql.toString(), Tuple.class)
@@ -122,6 +124,10 @@ public class CatalogoService {
             e.printStackTrace();
         }
         return menorValorAlcoolicoDtos;
+    }
+
+    public List<Catalogo> findByContainsName(String nome){
+        return catalogoRepository.findByNomeContains(nome);
     }
 
 }

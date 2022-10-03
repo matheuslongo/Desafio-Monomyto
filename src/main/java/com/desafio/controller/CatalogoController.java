@@ -7,7 +7,6 @@ package com.desafio.controller;/*
 import com.desafio.dto.CatalogoDto;
 import com.desafio.model.Catalogo;
 import com.desafio.service.CatalogoService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,6 +63,11 @@ public class CatalogoController {
     public ResponseEntity<Object> saveCatalogo(@RequestBody List<CatalogoDto> catalogoDto) {
         catalogoService.save(catalogoDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("PERSSISTIDO COM SUCESSO");
+    }
+
+    @GetMapping("/buscaPorParteDoNome/{nome}")
+    public ResponseEntity<?> findBebidaByContainsNome(@PathVariable(value = "nome") String nome){
+        return ResponseEntity.ok(catalogoService.findByContainsName(nome));
     }
 
 }

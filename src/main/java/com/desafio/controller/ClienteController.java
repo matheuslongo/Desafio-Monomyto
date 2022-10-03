@@ -6,15 +6,18 @@ package com.desafio.controller;/*
 import com.desafio.dto.ClienteDto;
 import com.desafio.model.Cliente;
 import com.desafio.service.ClienteService;
-import org.springframework.beans.BeanUtils;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class ClienteController {
     @Autowired
     ClienteService clienteService;
+
 
     @PostMapping
     public ResponseEntity<Object> saveCliente(@RequestBody List<ClienteDto> clienteDto) {
@@ -57,6 +61,13 @@ public class ClienteController {
         Optional<Cliente> clienteOptional = clienteService.findById(id);
         clienteService.delete(clienteOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("DELETADO COM SUCESSO");
+    }
+
+    @GetMapping("/data/{date}")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public ResponseEntity<?>list(@PathVariable(value = "date") String date){
+        List<Cliente>clienteList = clienteService.findByIdade(date);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteList);
     }
 
 }

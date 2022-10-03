@@ -3,18 +3,15 @@ package com.desafio.model;/*
  * @author matheuslongo on 27/09/2022.
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.UUID;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 @ToString
 @Builder
 @NoArgsConstructor
@@ -30,13 +27,13 @@ public class Cliente implements Serializable {
     @JsonProperty("Id")
     public String id;
 
-    @JsonProperty("Nome")
-    @Column(name = "nome")
+    @JsonProperty(value = "Nome")
+    @Column(name = "nome", nullable = false)
     private String nome;
 
 
-    @Column(name = "dataDeNascimento")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Column(name = "dataDeNascimento", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonProperty("DataNascimento")
     private LocalDate dataNascimento;
 

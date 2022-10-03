@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Builder
 @Getter
 @Setter
@@ -32,7 +31,7 @@ public class Venda implements Serializable {
     @JsonProperty("Id")
     private String id ;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonProperty("IdCliente")
     private Cliente cliente ;
 

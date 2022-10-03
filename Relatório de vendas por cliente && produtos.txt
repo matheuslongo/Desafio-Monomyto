@@ -1,0 +1,32 @@
+• Adicionar busca textual por nomes de clientes
+
+SELECT `venda`.`id`,
+    `venda`.`data_de_venda`,
+    `venda`.`cliente_id`
+FROM `monomyto_json`.`venda`
+where cliente_id =(select  id from monomyto_json.cliente where nome = 'Rafael Costa');
+
+• Adicionar filtro por range de datas
+
+SELECT * from monomyto_json.venda  
+WHERE data_de_venda  between '2014-11-24 ' and '2016-10-17' ;
+
+• Adicionar busca textual por nomes de produtos
+
+SELECT *
+FROM `monomyto_json`.`venda_item`
+where catalogo_id =(select  id from monomyto_json.catalogo where nome = 'Canuto Golden 700ml');
+
+• Para cada cliente, retornar o total das vendas para esse cliente
+
+SELECT COUNT(cliente_id) as total_de_vendas
+FROM `monomyto_json`.`venda`
+where cliente_id =(select  id from monomyto_json.cliente where nome = 'Rafael Costa');
+
+• Para cada produto, retornar o total de vendas desse produto e a quantidade total vendida
+
+select venda_item.catalogo_id, Sum(preco_unitario ) as valor_total_de_vendas
+FROM monomyto_json.venda_item
+group by catalogo_id
+;
+;

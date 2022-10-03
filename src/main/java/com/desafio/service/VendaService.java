@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +18,6 @@ public class VendaService {
 
     @Autowired
     private VendaRepository vendaRepository;
-
 
     public boolean save(Venda venda){
         try {
@@ -28,7 +28,6 @@ public class VendaService {
         }
         return false;
     }
-
     public boolean saveAll(List<Venda> vendaList){
         try {
             vendaRepository.saveAll(vendaList);
@@ -53,6 +52,10 @@ public class VendaService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public List<VendaDto> findVendaByName(String nome){
+        return vendaRepository.findVendaByNameCliente(nome) ;
     }
 
 }

@@ -12,6 +12,7 @@ import com.desafio.repository.CatalogoRepository;
 import com.desafio.repository.ClinteRepository;
 import com.desafio.repository.VendaItemRepository;
 import com.desafio.repository.VendaRepository;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,24 +64,23 @@ public class VendaItemService {
         try {
             vendaDtoList.forEach(vendaDto -> {
 
+                Venda venda = Venda.builder()
+                        .cliente(clinteRepository.findById(vendaDto.getIdCliente()).get())
+                        .id(vendaDto.getId())
+                        .data(LocalDateTime.parse(vendaDto.getDataDeVenda()))
+                        .build();
+
                 List<VendaItem> vendaItemList = new ArrayList<>();
                 vendaDto.getVendaItens().forEach(vendaItemDto -> {
                     var vendaItem = VendaItem.builder()
-                          //.venda(venda(vendaDto.getId())) na teoria este método era pra recuperar o ID que esta no dto(vendaDto)
+                            .venda(venda)
                             .catalogo(catalogo(vendaItemDto.getCatalogoId()))
                             .quantidade(vendaItemDto.getQuantidade())
                             .precoUnitario(vendaItemDto.getPrecoUnitario())
                             .build();
                     vendaItemList.add(vendaItem);
-                    vendaItemRepository.save(vendaItem);
                 });
-
-                Venda venda = Venda.builder()
-                        .cliente(cliente(vendaDto.getIdCliente()))
-                        .id(vendaDto.getId())
-                        .data(LocalDateTime.parse(vendaDto.getDataDeVenda()))
-                        .itens(vendaItemList)
-                        .build();
+                venda.setItens(vendaItemList);
                 vendaRepository.save(venda);
             });
 
