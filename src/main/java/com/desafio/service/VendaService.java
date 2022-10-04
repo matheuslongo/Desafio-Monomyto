@@ -92,9 +92,9 @@ public class VendaService {
     public List<VendaPorNomeDeProdutoDto> findVendaByProduto(String nome) {
         try {
             StringBuilder sql = new StringBuilder()
-                    .append("SELECT *\n" +
-                            "FROM `monomyto_json`.`venda_item`\n" +
-                            "where catalogo_id =(select  id from monomyto_json.catalogo where nome = :nome);");
+                    .append("SELECT * " )
+                    .append("FROM `monomyto_json`.`venda_item` " )
+                    .append("where catalogo_id =(select  id from monomyto_json.catalogo where nome = :nome);");
 
             @SuppressWarnings("unchecked")
             List<Tuple> tuplas = (List<Tuple>) entityManager.createNativeQuery(sql.toString(), Tuple.class)
