@@ -10,14 +10,15 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 
 @Data
 @ToString
 @AllArgsConstructor
-@Getter
-@Setter
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
 @Builder
 @NoArgsConstructor
 @JsonDeserialize
@@ -31,7 +32,7 @@ public class VendaDto implements Serializable {
 
     @JsonProperty("Data")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private String dataDeVenda;
+    private LocalDate dataDeVenda;
 
     @JsonProperty("Itens")
     private List<VendaItemDto> vendaItens;

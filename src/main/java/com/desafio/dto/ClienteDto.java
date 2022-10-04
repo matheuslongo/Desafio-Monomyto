@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @Getter
@@ -26,7 +28,7 @@ public class ClienteDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @JsonProperty("DataNascimento")
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
 
 

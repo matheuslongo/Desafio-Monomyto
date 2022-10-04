@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 
-@ToString
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

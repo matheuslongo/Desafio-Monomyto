@@ -5,6 +5,7 @@ package com.desafio.controller;/*
 
 import com.desafio.dto.VendaDto;
 import com.desafio.model.Venda;
+import com.desafio.repository.VendaRepository;
 import com.desafio.service.VendaItemService;
 import com.desafio.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,22 @@ public class VendaController {
     }
 
     @GetMapping("/buscaPorNome/{nome}")
-    public ResponseEntity<?> findByCliente(@PathVariable(value = "nome") String nome) {
+    public ResponseEntity<?> findByCliente(@PathVariable(value = "nome")String nome) {
         return ResponseEntity.ok(vendaService.findVendaByName(nome));
     }
 
+    @GetMapping("/buscaPorProduto/{nome}")
+    public ResponseEntity<?> findVendaByProduto(@PathVariable(value = "nome")String nome) {
+        return ResponseEntity.ok(vendaService.findVendaByProduto(nome));
+    }
+
+    @GetMapping("/totalDeVendasPorCliente/{nome}")
+    public ResponseEntity<?> findByTotalDeVendas(@PathVariable(value = "nome")String nome) {
+        return ResponseEntity.ok(vendaService.findTotalDeVendas(nome));
+    }
+
+    @GetMapping("/totalDeVendaDePodutos")
+    public ResponseEntity<?> findTotalDeVendas() {
+        return ResponseEntity.ok(vendaService.findTotalDeVendas());
+    }
 }

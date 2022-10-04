@@ -5,9 +5,9 @@ package com.desafio.service;/*
 
 
 import com.desafio.dto.ClienteDto;
+import com.desafio.dto.ClienteQueryIdadeDto;
 import com.desafio.model.Cliente;
 import com.desafio.repository.ClinteRepository;
-import lombok.var;
 import org.hibernate.jpa.QueryHints;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -80,30 +79,31 @@ public class ClienteService {
         return clinteRepository.findByDataNascimento(date);
     }
 
-    public List<ClienteDto> findByIdadeRange(String idadeMenor) {
+    public List<ClienteQueryIdadeDto> findByIdadeRange(String idadeMenor, String idadeMaior) {
         try {
             StringBuilder sql = new StringBuilder()
                     .append(" SELECT nome, id, data_de_nascimento FROM monomyto_json.cliente  ")
                     .append(" WHERE cliente.data_de_nascimento   " )
-                    .append(" between  :idadeMenor and '2022-02-01' ; ");
+                    .append(" between  :idadeMenor and :idadeMaior ; ");
 
             @SuppressWarnings("unchecked")
             List<Tuple> tuplas = (List<Tuple>) entityManager.createNativeQuery(sql.toString(), Tuple.class)
                     .setHint(QueryHints.HINT_READONLY, true)
                     .setParameter("idadeMenor", idadeMenor)
+                    .setParameter("idadeMaior", idadeMaior)
                     .getResultList();
-            List<ClienteDto> clienteDto = new ArrayList<>();
+            List<ClienteQueryIdadeDto> clienteDto = new ArrayList<>();
             tuplas.forEach(item -> {
                 String nome = item.get("nome").toString();
-                String data = String.valueOf(LocalDate.parse(item.get("data_de_nascimento").toString()));
+                Date data =(Date) item.get("data_de_nascimento");
                 String id = item.get("id").toString();
-                ClienteDto clienteDto1 = new ClienteDto(nome, id, data);
-                clienteDto.add(clienteDto1);
+                ClienteQueryIdadeDto clienteQueryIdadeDto = new ClienteQueryIdadeDto(id, nome, data);
+                clienteDto.add(clienteQueryIdadeDto);
             });
 
-            return clienteDto;
+            return  clienteDto;
 
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
         ;

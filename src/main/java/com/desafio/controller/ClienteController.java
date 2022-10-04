@@ -63,11 +63,10 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.OK).body("DELETADO COM SUCESSO");
     }
 
-    @GetMapping("/data/{date}")
+    @GetMapping("/buscaPorIdade/{idadeMenor}/{idadeMaior}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    public ResponseEntity<?>list(@PathVariable(value = "date") String date){
-        List<Cliente>clienteList = clienteService.findByIdade(date);
-        return ResponseEntity.status(HttpStatus.OK).body(clienteList);
+    public ResponseEntity<?>list(@PathVariable(value = "idadeMenor") String idadeMenor,@PathVariable(value = "idadeMaior") String idadeMaior){;
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findByIdadeRange(idadeMenor, idadeMaior));
     }
 
 }

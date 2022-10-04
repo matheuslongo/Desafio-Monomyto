@@ -28,21 +28,21 @@ public class Venda implements Serializable {
 
 
     @Id
-    @JsonProperty("Id")
+    @JsonProperty("id")
     private String id ;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JsonProperty("IdCliente")
+    @JsonProperty("id_cliente")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cliente cliente ;
 
 
     @Column(name = "dataDeVenda", nullable = false)
     @DateTimeFormat(pattern ="dd-MM-yyyy HH:mm:ss")
+    @JsonProperty("data_de_venda")
     private LocalDateTime data;
 
 
     @JsonProperty("Itens")
-    @JsonIgnore
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
     private List<VendaItem> itens ;
 

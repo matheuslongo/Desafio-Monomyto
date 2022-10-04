@@ -12,7 +12,6 @@ import com.desafio.repository.CatalogoRepository;
 import com.desafio.repository.ClinteRepository;
 import com.desafio.repository.VendaItemRepository;
 import com.desafio.repository.VendaRepository;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +66,7 @@ public class VendaItemService {
                 Venda venda = Venda.builder()
                         .cliente(clinteRepository.findById(vendaDto.getIdCliente()).get())
                         .id(vendaDto.getId())
-                        .data(LocalDateTime.parse(vendaDto.getDataDeVenda()))
+                        .data(LocalDateTime.from((vendaDto.getDataDeVenda())))
                         .build();
 
                 List<VendaItem> vendaItemList = new ArrayList<>();
