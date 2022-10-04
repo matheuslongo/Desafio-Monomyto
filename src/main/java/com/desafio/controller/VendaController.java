@@ -56,4 +56,8 @@ public class VendaController {
     public ResponseEntity<?> findTotalDeVendas() {
         return ResponseEntity.ok(vendaService.findTotalDeVendas());
     }
+
+    @GetMapping("/buscarTodasAsVendas")
+    public ResponseEntity<?> findTodasAsVendas(){return ResponseEntity.ok(vendaService.findAll());}
+
 }

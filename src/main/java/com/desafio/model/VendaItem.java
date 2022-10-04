@@ -32,7 +32,7 @@ public class VendaItem implements Serializable {
     @Column(name = "quantidade")
     private Double quantidade ;
 
-
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "venda_id", nullable = true)
     private Venda venda;

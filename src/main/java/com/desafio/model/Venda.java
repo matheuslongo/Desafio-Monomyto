@@ -43,7 +43,8 @@ public class Venda implements Serializable {
 
 
     @JsonProperty("Itens")
-    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<VendaItem> itens ;
 
 }

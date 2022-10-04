@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -169,6 +168,10 @@ public class VendaService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Iterable<Venda> findAll() {
+        return vendaRepository.findAll();
     }
 
 }
